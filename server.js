@@ -14,9 +14,14 @@ app.post('/sms', (req, res) => {
   if(req.body.Body.toLowerCase().indexOf("hello") != -1)
   	twiml.message("Hey! Welcome to Foodoo. If you need help, text INSTRUCTIONS")
   else if(req.body.Body.toLowerCase().indexOf("instructions") != -1)
-  	twiml.message("1) If you want to see what your favorite food are, text: What are my cravings?\n2) If you want to say what food you like, text: I like ____. Example: I like donuts\n3) If you want to see nearby restaurants that satisfy your craving, text: I am craving _____. Example: I am craving boba\nOnce you arrive at a specific restaurant, we will text you a number to communicate to recommend what items in the menu you would like to try. Enjoy! :)")
+  	twiml.message("1) If you want to see what your favorite food are, text: What are my cravings?\n2) If you want to say what food you like, text: I like ____. Example: I like donuts\n3) If you want to see nearby restaurants that satisfy your craving, text: I am craving _____. Example: I am craving boba\n\nOnce you arrive at a specific restaurant, we will text you a number to communicate to recommend what items in the menu you would like to try. Enjoy! :)")
   else if(req.body.Body.toLowerCase().indexOf("what are my cravings") != -1)
   	twiml.message("Your top cravings are " + items)
+  else if(req.body.Body.toLowerCase().indexOf("i am craving") != -1) {
+  	let str = req.body.Body;
+  	let item = str.substring(str.indexOf("g") + 2, str.length);
+  	twiml.message(item);
+  }
   else
   	twiml.message('No Body param match, Twilio sends this in the request to your server.')
 
