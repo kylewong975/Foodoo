@@ -1,5 +1,6 @@
 const http = require('http');
 const express = require('express');
+const firebase = requre('firebase');
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
 const bodyParser = require('body-parser');
 
@@ -11,6 +12,7 @@ app.post('/sms', (req, res) => {
   const twiml = new MessagingResponse();
   let items = "boba";
 
+  // main app commands
   if(req.body.Body.toLowerCase().indexOf("hello") != -1)
   	twiml.message("Hey! Welcome to Foodoo. If you need help, text INSTRUCTIONS")
   else if(req.body.Body.toLowerCase().indexOf("instructions") != -1)
@@ -22,6 +24,11 @@ app.post('/sms', (req, res) => {
   	let item = str.substring(str.indexOf("g") + 2, str.length);
   	twiml.message(item);
   }
+  else if(req.body.Body.toLowerCase().indexOf("i like") != -1) {
+  	let str = req.body.Body;
+  	let item = str.substring(str.indexOf("e") + 2, str.length);
+  	twiml.message(item);
+  }
   else
   	twiml.message('No Body param match, Twilio sends this in the request to your server.')
 
@@ -31,6 +38,8 @@ app.post('/sms', (req, res) => {
   res.end(twiml.toString());
 });
 
+// establish different ports for different numbers
+// then do ngrok http <port #> to establish
 http.createServer(app).listen(4848, () => {
   console.log('Express server listening on port 4848');
 });
