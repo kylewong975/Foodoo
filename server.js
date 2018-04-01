@@ -72,10 +72,10 @@ app.post('/sms', (req, res) => {
   else if(req.body.Body.toLowerCase().indexOf("i like") != -1) {
   	let str = req.body.Body;
   	let item = str.substring(str.indexOf("e") + 2, str.length);
-  	twiml.message(item);
-    getscript("./firebase_server.js",function(){
-        addToFreqs(item);
-    });
+  	//twiml.message(item);
+    //getscript("./firebase_server.js",function(){
+    //    addToFreqs(item);
+    //});
   	//twiml.message(item);
   }
   else if(req.body.Body.toLowerCase().indexOf("i am here") != -1) {
