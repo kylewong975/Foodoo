@@ -2,10 +2,15 @@ const http = require('http');
 const express = require('express');
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
 const bodyParser = require('body-parser');
+const firebase = require('firebase-admin');
 
 const app = express();
 
-app.use(bodyParser());
+app.use(bodyParser.json());
+
+app.get('/', function(req, res) {
+	res.send("home page");
+})
 
 app.post('/sms', (req, res) => {
   const twiml = new MessagingResponse();
