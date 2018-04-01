@@ -8,7 +8,7 @@ const firebase_server = require('./firebase_server.js');
 
 const app = express();
 
-app.use(bodyParser());
+app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
 	res.send(firebase_server.getTopThree());
@@ -36,11 +36,11 @@ app.post('/sms', (req, res) => {
   	let msg = "Here are some places you may like:\n1) In-N-Out Burger at 922 Gayley Ave, Los Angeles, CA 90024\n2) Diddy Riese at 926 Broxton Ave, Los Angeles, CA 90024\n3) Chick-fil-A at 900 Westwood Blvd, Los Angeles, CA 90024\n4) Fat Sal's at 950 Gayley Ave, Los Angeles, CA 90024\n5) The Boiling Crab at 10875 Kinross Ave., Los Angeles, CA 90024";
     //twiml.message(item);
   	// call Foursquare API on place recommedations
-  	var options = { 
+  	var options = {
       method: 'GET',
   	  url: 'https://api.foursquare.com/v2/venues/explore',
-  	  qs: 
-  	   { 
+  	  qs:
+  	   {
          ll: '34.0708,-118.4502',
   	     section: 'food',
   	     query: 'burger',
@@ -49,13 +49,13 @@ app.post('/sms', (req, res) => {
   	     client_id: 'DXQLMKCJW1RARE51SGEEGTULGJNQSNAYD3G1CVSJMGPJMH3S',
   	     client_secret: 'D0SWAN4H4GNBOM3YPJQUPILVTQSEZ55LLVMHT02ZVDDKWHYD',
   	     v: '20180331',
-  	     null: '' 
+  	     null: ''
        },
-  	   headers: 
+  	   headers:
   	   {
   	     'Content-Type': 'application/json'
   	   },
-  	   json: true 
+  	   json: true
 	  };
 	  request(options, function (error, response, body) {
   		if (error) throw new Error(error);

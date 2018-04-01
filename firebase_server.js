@@ -31,7 +31,18 @@ function addToFreqs(item) {
 function getTopThree() {
     const freqRef = db.collection('users');
     const firstThree = freqRef.orderBy('freq', 'desc').limit(3);
-    return firstThree;
+
+    // const citiesRef = db.collection('cities');
+    // const first = citiesRef.where('population', '>', 2500000).orderBy('population');
+
+    return Promise.all([firstThree.get()]).then(res => {
+        res.forEach(r => {
+            r.forEach(d => {
+                console.log('Get:', d);
+            });
+            console.log();
+        });
+    });
 }
 
 module.exports = {
