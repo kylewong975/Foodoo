@@ -22,7 +22,7 @@ app.post('/sms', (req, res) => {
   else if(req.body.Body.toLowerCase().indexOf("instructions") != -1)
   	twiml.message("1) If you want to see top favorites based on your current cravings, text: I am hungry\n2) If you want recommendations based on what you like, text: I like ____. Example: I like fries\n\nHope you enjoy your meal at In-N-Out! When you're done ordering, just text: I ordered. Then, we will give you a brief survey to further improve the dining experience.")
   else if(req.body.Body.toLowerCase().indexOf("i am hungry") != -1 || req.body.Body.toLowerCase().indexOf("i like burger") != -1)
-    twiml.message("Here are some users' favorites: \n1) Double Double ($3.95)\n2) Cheeseburger ($2.80)\n3) Hamburger ($2.50)")
+    twiml.message("Here are some choices based on your top cravings: \n1) Double Double ($3.95)\n2) Cheeseburger ($2.80)\n3) Hamburger ($2.50)")
   else if(req.body.Body.toLowerCase().indexOf("i like soda") != -1) {
     for(let x = 0; x < items.length; x++) {
       let arr = []
