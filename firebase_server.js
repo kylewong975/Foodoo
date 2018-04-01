@@ -5,7 +5,7 @@ const request = require('request');
 const bodyParser = require('body-parser');
 
 // Fetch the service account key JSON file contents
-const serviceAccount = require("./HackTech-1c6750abdc81.json");
+const serviceAccount = require("./a1c6750abdc81.json");
 
 // Initialize the app with a service account, granting admin privileges
 admin.initializeApp({
