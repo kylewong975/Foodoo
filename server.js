@@ -1,6 +1,7 @@
 const http = require('http');
 const express = require('express');
-const firebase = requre('firebase');
+const firebase = require('firebase');
+const request = require('request');
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
 const bodyParser = require('body-parser');
 
@@ -23,6 +24,29 @@ app.post('/sms', (req, res) => {
   	let str = req.body.Body;
   	let item = str.substring(str.indexOf("g") + 2, str.length);
   	twiml.message(item);
+  	// call Foursquare API on place recommedations
+  	var options = { method: 'GET',
+	  url: 'https://api.foursquare.com/v2/venues/explore',
+	  qs: 
+	   { ll: '34.0708,-118.4502',
+	     section: 'trending',
+	     query: 'boba',
+	     limit: '5',
+	     '': '',
+	     client_id: 'DXQLMKCJW1RARE51SGEEGTULGJNQSNAYD3G1CVSJMGPJMH3S',
+	     client_secret: 'D0SWAN4H4GNBOM3YPJQUPILVTQSEZ55LLVMHT02ZVDDKWHYD',
+	     v: '20180331',
+	     null: '' },
+	  headers: 
+	   {
+	     'Content-Type': 'application/json'
+	   },
+	  json: true 
+	};
+	request(options, function (error, response, body) {
+  		if (error) throw new Error(error);
+  		console.log(body);
+	});
   }
   else if(req.body.Body.toLowerCase().indexOf("i like") != -1) {
   	let str = req.body.Body;
