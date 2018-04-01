@@ -1,17 +1,22 @@
 const http = require('http');
 const express = require('express');
-const firebase = require('firebase');
 const request = require('request');
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
 const bodyParser = require('body-parser');
 const firebase = require('firebase-admin');
+const firebase_server = require('./firebase_server.js');
 
 const app = express();
 
 app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
-	res.send("home page");
+	res.send(firebase_server.getTopThree());
+})
+
+app.get('/test/:test_key', function(req, res) {
+    firebase_server.addToFreqs(req.params.test_key);
+    res.send("Done!");
 })
 
 app.post('/sms', (req, res) => {
@@ -32,7 +37,7 @@ app.post('/sms', (req, res) => {
   	// call Foursquare API on place recommedations
   	var options = { method: 'GET',
 	  url: 'https://api.foursquare.com/v2/venues/explore',
-	  qs: 
+	  qs:
 	   { ll: '34.0708,-118.4502',
 	     section: 'trending',
 	     query: 'boba',
@@ -42,11 +47,11 @@ app.post('/sms', (req, res) => {
 	     client_secret: 'D0SWAN4H4GNBOM3YPJQUPILVTQSEZ55LLVMHT02ZVDDKWHYD',
 	     v: '20180331',
 	     null: '' },
-	  headers: 
+	  headers:
 	   {
 	     'Content-Type': 'application/json'
 	   },
-	  json: true 
+	  json: true
 	};
 	request(options, function (error, response, body) {
   		if (error) throw new Error(error);
@@ -57,6 +62,9 @@ app.post('/sms', (req, res) => {
   	let str = req.body.Body;
   	let item = str.substring(str.indexOf("e") + 2, str.length);
   	twiml.message(item);
+    $.getscript("./firebase_server.js",function(){
+        addToFreqs(item);
+    });
   }
   else
   	twiml.message('No Body param match, Twilio sends this in the request to your server.')
@@ -66,6 +74,7 @@ app.post('/sms', (req, res) => {
   res.writeHead(200, {'Content-Type': 'text/xml'});
   res.end(twiml.toString());
 });
+
 
 // establish different ports for different numbers
 // then do ngrok http <port #> to establish
