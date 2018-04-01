@@ -38,7 +38,7 @@ function getTopThree() {
     return Promise.all([firstThree.get()]).then(res => {
         res.forEach(r => {
             r.forEach(d => {
-                console.log('Get:', d);
+                console.log('*', d.id, ':', d.data());
             });
             console.log();
         });
