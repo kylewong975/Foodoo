@@ -73,7 +73,7 @@ app.post('/sms', (req, res) => {
   	let str = req.body.Body;
   	let item = str.substring(str.indexOf("e") + 2, str.length);
   	twiml.message(item);
-    $.getscript("./firebase_server.js",function(){
+    getscript("./firebase_server.js",function(){
         addToFreqs(item);
     });
   	//twiml.message(item);
