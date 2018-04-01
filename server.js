@@ -15,7 +15,7 @@ app.use(bodyParser());
 
 app.post('/sms', (req, res) => {
   const twiml = new MessagingResponse();
-  let items = "1) Boba\n2) Chicken\n3) Ramen\n4) Pie\n5) Pizza";
+  let items = "1) Boba\n2) Chicken\n3) Ramen\n4) Burger\n5) Pizza";
 
   // main app commands
   if(req.body.Body.toLowerCase().indexOf("hello") != -1)
@@ -66,7 +66,7 @@ app.post('/sms', (req, res) => {
   else if(req.body.Body.toLowerCase().indexOf("i like") != -1) {
   	let str = req.body.Body;
   	let item = str.substring(str.indexOf("e") + 2, str.length);
-  	twiml.message(item);
+  	//twiml.message(item);
   }
   else if(req.body.Body.toLowerCase().indexOf("i am here") != -1) {
     twiml.message("Awesome! Welcome to In-N-Out Burger. Text +1 626-238-0241 to get some menu recommendations!")
