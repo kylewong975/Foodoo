@@ -14,3 +14,8 @@ I am personally a foodie, so I often spend a lot of time deciding where to eat a
 - Firebase Admin SDK for server-side (Cloud Firestore)
 - Twilio API
 - Foursquare API
+
+### Demo
+![Main App](img/MainApp.jpg)
+![Recommendations](img/Recommendations.jpg)
+![RestaurantApp](img/Restaurant.jpg)
